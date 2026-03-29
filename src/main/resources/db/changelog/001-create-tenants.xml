@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="001" author="prabhat">
+        <createTable tableName="tenants">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="business_name" type="VARCHAR(150)"/>
+            <column name="subdomain" type="VARCHAR(100)"/>
+            <column name="custom_domain" type="VARCHAR(150)"/>
+            <column name="owner_name" type="VARCHAR(100)"/>
+            <column name="phone" type="VARCHAR(15)"/>
+            <column name="email" type="VARCHAR(100)"/>
+            <column name="subscription_plan" type="VARCHAR(50)"/>
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <addUniqueConstraint tableName="tenants"
+                             columnNames="subdomain"
+                             constraintName="uk_tenant_subdomain"/>
+    </changeSet>
+
+</databaseChangeLog>

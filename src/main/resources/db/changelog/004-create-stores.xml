@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="004" author="prabhat">
+        <createTable tableName="stores">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="tenant_id" type="BIGINT"/>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="address" type="TEXT"/>
+            <column name="latitude" type="DECIMAL(10,7)"/>
+            <column name="longitude" type="DECIMAL(10,7)"/>
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="stores"
+                                 baseColumnNames="tenant_id"
+                                 referencedTableName="tenants"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_store_tenant"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,23 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="008" author="prabhat">
+        <createTable tableName="orders">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="tenant_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+            <column name="store_id" type="BIGINT"/>
+            <column name="total_amount" type="DECIMAL(10,2)"/>
+            <column name="status" type="VARCHAR(50)"/>
+            <column name="payment_method" type="VARCHAR(20)"/>
+            <column name="payment_status" type="VARCHAR(20)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

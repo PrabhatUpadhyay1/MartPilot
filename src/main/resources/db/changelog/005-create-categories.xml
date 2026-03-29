@@ -1,0 +1,19 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="005" author="prabhat">
+        <createTable tableName="categories">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="tenant_id" type="BIGINT"/>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="image_url" type="TEXT"/>
+            <column name="parent_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,2731 @@
+{
+  "info": {
+    "_postman_id": "martpilot-api-collection-2024",
+    "name": "MartPilot SaaS API",
+    "description": "Complete REST API collection for MartPilot multi-tenant marketplace platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12345"
+  },
+  "item": [
+    {
+      "name": "🏢 Tenants",
+      "description": "Manage tenant organizations (SaaS accounts)",
+      "item": [
+        {
+          "name": "Create Tenant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_name\": \"Best Mart Electronics\",\n  \"subdomain\": \"bestmart\",\n  \"custom_domain\": \"bestmart.com\",\n  \"owner_name\": \"John Doe\",\n  \"phone\": \"+1234567890\",\n  \"email\": \"john@bestmart.com\",\n  \"subscription_plan\": \"premium\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants"
+              ]
+            },
+            "description": "Create a new tenant (SaaS account). Returns the created tenant with ID."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"business_name\": \"Best Mart Electronics\",\n  \"subdomain\": \"bestmart\",\n  \"custom_domain\": \"bestmart.com\",\n  \"owner_name\": \"John Doe\",\n  \"phone\": \"+1234567890\",\n  \"email\": \"john@bestmart.com\",\n  \"subscription_plan\": \"premium\",\n  \"is_active\": true,\n  \"created_at\": \"2024-03-30T10:30:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Tenants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants"
+              ]
+            },
+            "description": "Retrieve all tenants in the system."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"business_name\": \"Best Mart Electronics\",\n    \"subdomain\": \"bestmart\",\n    \"custom_domain\": \"bestmart.com\",\n    \"owner_name\": \"John Doe\",\n    \"phone\": \"+1234567890\",\n    \"email\": \"john@bestmart.com\",\n    \"subscription_plan\": \"premium\",\n    \"is_active\": true,\n    \"created_at\": \"2024-03-30T10:30:00\"\n  },\n  {\n    \"id\": 2,\n    \"business_name\": \"Tech Store\",\n    \"subdomain\": \"techstore\",\n    \"custom_domain\": \"techstore.io\",\n    \"owner_name\": \"Jane Smith\",\n    \"phone\": \"+0987654321\",\n    \"email\": \"jane@techstore.io\",\n    \"subscription_plan\": \"standard\",\n    \"is_active\": true,\n    \"created_at\": \"2024-03-29T15:45:00\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Active Tenants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/active",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "active"
+              ]
+            },
+            "description": "Retrieve only active tenants (is_active = true)."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/active",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "active"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"business_name\": \"Best Mart Electronics\",\n    \"subdomain\": \"bestmart\",\n    \"is_active\": true\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Tenant by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}"
+              ]
+            },
+            "description": "Get a specific tenant by ID. Use variable {{tenant_id}} for the ID."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"business_name\": \"Best Mart Electronics\",\n  \"subdomain\": \"bestmart\",\n  \"custom_domain\": \"bestmart.com\",\n  \"owner_name\": \"John Doe\",\n  \"phone\": \"+1234567890\",\n  \"email\": \"john@bestmart.com\",\n  \"subscription_plan\": \"premium\",\n  \"is_active\": true,\n  \"created_at\": \"2024-03-30T10:30:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Tenant by Subdomain",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/subdomain/{{subdomain}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "subdomain",
+                "{{subdomain}}"
+              ]
+            },
+            "description": "Get tenant by subdomain (useful for multi-tenant routing)."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/subdomain/bestmart",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "subdomain",
+                    "bestmart"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"business_name\": \"Best Mart Electronics\",\n  \"subdomain\": \"bestmart\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Tenant",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_name\": \"Best Mart Electronics - Updated\",\n  \"subscription_plan\": \"enterprise\",\n  \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}"
+              ]
+            },
+            "description": "Update tenant details. Only provided fields are updated (partial update)."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"business_name\": \"Best Mart Electronics - Updated\",\n  \"subscription_plan\": \"enterprise\",\n  \"is_active\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Tenant",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}"
+              ]
+            },
+            "description": "Delete a tenant and all associated data (cascade delete). Requires confirmation."
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "👤 Users",
+      "description": "Manage platform users across all tenants",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Smith\",\n  \"phone\": \"+9876543210\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "Create a new user. Phone number must be unique."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"name\": \"John Smith\",\n  \"phone\": \"+9876543210\",\n  \"created_at\": \"2024-03-30T10:35:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "description": "Retrieve all users in the system."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/users",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"John Smith\",\n    \"phone\": \"+9876543210\",\n    \"created_at\": \"2024-03-30T10:35:00\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Alice Johnson\",\n    \"phone\": \"+1122334455\",\n    \"created_at\": \"2024-03-30T10:40:00\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
+            },
+            "description": "Get a specific user by ID."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/users/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"name\": \"John Smith\",\n  \"phone\": \"+9876543210\",\n  \"created_at\": \"2024-03-30T10:35:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get User by Phone",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/phone/{{phone}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "phone",
+                "{{phone}}"
+              ]
+            },
+            "description": "Get user by phone number (useful for login)."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/users/phone/%2B9876543210",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "phone",
+                    "+9876543210"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"name\": \"John Smith\",\n  \"phone\": \"+9876543210\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Smith Updated\",\n  \"phone\": \"+9876543210\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
+            },
+            "description": "Update user details."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/users/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"name\": \"John Smith Updated\",\n  \"phone\": \"+9876543210\",\n  \"created_at\": \"2024-03-30T10:35:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
+            },
+            "description": "Delete a user. All associated tenant mappings and orders will be deleted."
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/users/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "users",
+                    "1"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🔗 User-Tenants (Mappings)",
+      "description": "Manage user assignments to tenants (many-to-many relationship)",
+      "item": [
+        {
+          "name": "Assign User to Tenant",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"tenant_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/user-tenants",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user-tenants"
+              ]
+            },
+            "description": "Assign a user to a tenant. User can be assigned to multiple tenants."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/user-tenants",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "user-tenants"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"user_id\": 1,\n  \"tenant_id\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get User's Tenants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/user-tenants/user/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user-tenants",
+                "user",
+                "{{user_id}}"
+              ]
+            },
+            "description": "Get all tenants assigned to a user."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/user-tenants/user/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "user-tenants",
+                    "user",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"user_id\": 1,\n    \"tenant_id\": 1\n  },\n  {\n    \"id\": 2,\n    \"user_id\": 1,\n    \"tenant_id\": 2\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Tenant's Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/user-tenants/tenant/{{tenant_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user-tenants",
+                "tenant",
+                "{{tenant_id}}"
+              ]
+            },
+            "description": "Get all users assigned to a tenant."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/user-tenants/tenant/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "user-tenants",
+                    "tenant",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"user_id\": 1,\n    \"tenant_id\": 1\n  },\n  {\n    \"id\": 3,\n    \"user_id\": 2,\n    \"tenant_id\": 1\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get User-Tenant Mapping",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/user-tenants/user/{{user_id}}/tenant/{{tenant_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user-tenants",
+                "user",
+                "{{user_id}}",
+                "tenant",
+                "{{tenant_id}}"
+              ]
+            },
+            "description": "Check if a user is assigned to a specific tenant."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/user-tenants/user/1/tenant/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "user-tenants",
+                    "user",
+                    "1",
+                    "tenant",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"user_id\": 1,\n  \"tenant_id\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "Remove User from Tenant",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/user-tenants/user/{{user_id}}/tenant/{{tenant_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "user-tenants",
+                "user",
+                "{{user_id}}",
+                "tenant",
+                "{{tenant_id}}"
+              ]
+            },
+            "description": "Remove user's access to a specific tenant."
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/user-tenants/user/1/tenant/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "user-tenants",
+                    "user",
+                    "1",
+                    "tenant",
+                    "1"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🏪 Stores (Tenant-Scoped)",
+      "description": "Manage stores within a tenant",
+      "item": [
+        {
+          "name": "Create Store",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Best Mart - Downtown\",\n  \"address\": \"123 Main Street, New York, NY 10001\",\n  \"latitude\": 40.7128,\n  \"longitude\": -74.0060\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "stores"
+              ]
+            },
+            "description": "Create a new store for the tenant. Includes location coordinates for geolocation."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/stores",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "stores"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"name\": \"Best Mart - Downtown\",\n  \"address\": \"123 Main Street, New York, NY 10001\",\n  \"latitude\": 40.7128,\n  \"longitude\": -74.0060,\n  \"is_active\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Stores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "stores"
+              ]
+            },
+            "description": "Get all stores for a tenant."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/stores",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "stores"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"name\": \"Best Mart - Downtown\",\n    \"address\": \"123 Main Street, New York, NY 10001\",\n    \"latitude\": 40.7128,\n    \"longitude\": -74.0060,\n    \"is_active\": true\n  },\n  {\n    \"id\": 2,\n    \"tenant_id\": 1,\n    \"name\": \"Best Mart - Midtown\",\n    \"address\": \"456 Broadway, New York, NY 10013\",\n    \"latitude\": 40.7580,\n    \"longitude\": -73.9855,\n    \"is_active\": true\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Active Stores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores/active",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "stores",
+                "active"
+              ]
+            },
+            "description": "Get only active stores for a tenant."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/stores/active",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "stores",
+                    "active"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"name\": \"Best Mart - Downtown\",\n    \"is_active\": true\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Store by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores/{{store_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "stores",
+                "{{store_id}}"
+              ]
+            },
+            "description": "Get a specific store by ID."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/stores/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "stores",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"name\": \"Best Mart - Downtown\",\n  \"address\": \"123 Main Street, New York, NY 10001\",\n  \"latitude\": 40.7128,\n  \"longitude\": -74.0060,\n  \"is_active\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Store",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Best Mart - Downtown (Updated)\",\n  \"address\": \"123 Main Street, Suite 100, New York, NY 10001\",\n  \"is_active\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores/{{store_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "stores",
+                "{{store_id}}"
+              ]
+            },
+            "description": "Update store details."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/stores/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "stores",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"name\": \"Best Mart - Downtown (Updated)\",\n  \"is_active\": false\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Store",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores/{{store_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "stores",
+                "{{store_id}}"
+              ]
+            },
+            "description": "Delete a store. All associated products and orders will be deleted."
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/stores/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "stores",
+                    "1"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📁 Categories (Tenant-Scoped)",
+      "description": "Manage product categories with hierarchical structure",
+      "item": [
+        {
+          "name": "Create Root Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Electronics\",\n  \"image_url\": \"https://example.com/categories/electronics.jpg\",\n  \"parent_id\": null\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "categories"
+              ]
+            },
+            "description": "Create a root category (parent_id = null)."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/categories",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "categories"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"name\": \"Electronics\",\n  \"image_url\": \"https://example.com/categories/electronics.jpg\",\n  \"parent_id\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Subcategory",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Laptops\",\n  \"image_url\": \"https://example.com/categories/laptops.jpg\",\n  \"parent_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "categories"
+              ]
+            },
+            "description": "Create a subcategory under a parent category (parent_id = parent category ID)."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/categories",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "categories"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 2,\n  \"tenant_id\": 1,\n  \"name\": \"Laptops\",\n  \"image_url\": \"https://example.com/categories/laptops.jpg\",\n  \"parent_id\": 1\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "categories"
+              ]
+            },
+            "description": "Get all categories for a tenant."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/categories",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "categories"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"name\": \"Electronics\",\n    \"parent_id\": null\n  },\n  {\n    \"id\": 2,\n    \"tenant_id\": 1,\n    \"name\": \"Laptops\",\n    \"parent_id\": 1\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Root Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories/root",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "categories",
+                "root"
+              ]
+            },
+            "description": "Get only root-level categories (parent_id = null)."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/categories/root",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "categories",
+                    "root"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"name\": \"Electronics\",\n    \"parent_id\": null\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Subcategories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories/{{category_id}}/sub-categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "categories",
+                "{{category_id}}",
+                "sub-categories"
+              ]
+            },
+            "description": "Get all subcategories under a parent category."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/categories/1/sub-categories",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "categories",
+                    "1",
+                    "sub-categories"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 2,\n    \"tenant_id\": 1,\n    \"name\": \"Laptops\",\n    \"parent_id\": 1\n  },\n  {\n    \"id\": 3,\n    \"tenant_id\": 1,\n    \"name\": \"Desktops\",\n    \"parent_id\": 1\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Category by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories/{{category_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "categories",
+                "{{category_id}}"
+              ]
+            },
+            "description": "Get a specific category by ID."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/categories/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "categories",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"name\": \"Electronics\",\n  \"image_url\": \"https://example.com/categories/electronics.jpg\",\n  \"parent_id\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Electronics & Gadgets\",\n  \"image_url\": \"https://example.com/categories/electronics-updated.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories/{{category_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "categories",
+                "{{category_id}}"
+              ]
+            },
+            "description": "Update category details."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/categories/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "categories",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"name\": \"Electronics & Gadgets\",\n  \"image_url\": \"https://example.com/categories/electronics-updated.jpg\",\n  \"parent_id\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories/{{category_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "categories",
+                "{{category_id}}"
+              ]
+            },
+            "description": "Delete a category. Subcategories and products in this category will be deleted."
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/categories/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "categories",
+                    "1"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📦 Products (Tenant-Scoped)",
+      "description": "Manage products in the catalog",
+      "item": [
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dell XPS 13 Laptop\",\n  \"description\": \"Ultra-portable 13-inch FHD touchscreen laptop with Intel Core i7, 16GB RAM, 512GB SSD\",\n  \"category_id\": 2,\n  \"image_url\": \"https://example.com/products/dell-xps-13.jpg\",\n  \"brand\": \"Dell\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "products"
+              ]
+            },
+            "description": "Create a new product in the tenant's catalog."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "products"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"name\": \"Dell XPS 13 Laptop\",\n  \"description\": \"Ultra-portable 13-inch FHD touchscreen laptop...\",\n  \"category_id\": 2,\n  \"image_url\": \"https://example.com/products/dell-xps-13.jpg\",\n  \"brand\": \"Dell\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "products"
+              ]
+            },
+            "description": "Get all products in a tenant's catalog."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "products"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"name\": \"Dell XPS 13 Laptop\",\n    \"category_id\": 2,\n    \"brand\": \"Dell\"\n  },\n  {\n    \"id\": 2,\n    \"tenant_id\": 1,\n    \"name\": \"HP Pavilion 15 Laptop\",\n    \"category_id\": 2,\n    \"brand\": \"HP\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Products by Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/products/category/{{category_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "products",
+                "category",
+                "{{category_id}}"
+              ]
+            },
+            "description": "Get all products in a specific category."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/products/category/2",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "products",
+                    "category",
+                    "2"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"name\": \"Dell XPS 13 Laptop\",\n    \"category_id\": 2\n  },\n  {\n    \"id\": 2,\n    \"tenant_id\": 1,\n    \"name\": \"HP Pavilion 15 Laptop\",\n    \"category_id\": 2\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/products/{{product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "products",
+                "{{product_id}}"
+              ]
+            },
+            "description": "Get a specific product by ID."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/products/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "products",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"name\": \"Dell XPS 13 Laptop\",\n  \"description\": \"Ultra-portable 13-inch FHD touchscreen laptop...\",\n  \"category_id\": 2,\n  \"image_url\": \"https://example.com/products/dell-xps-13.jpg\",\n  \"brand\": \"Dell\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Dell XPS 13 Laptop - 2024 Edition\",\n  \"description\": \"New 2024 model with Intel Core i9, 32GB RAM, 1TB SSD\",\n  \"brand\": \"Dell\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/products/{{product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "products",
+                "{{product_id}}"
+              ]
+            },
+            "description": "Update product details."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/products/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "products",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"name\": \"Dell XPS 13 Laptop - 2024 Edition\",\n  \"description\": \"New 2024 model with Intel Core i9...\",\n  \"brand\": \"Dell\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/products/{{product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "products",
+                "{{product_id}}"
+              ]
+            },
+            "description": "Delete a product. All store inventories and order items for this product will be deleted."
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/products/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "products",
+                    "1"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🛍️ Store Products - Inventory (Tenant-Scoped)",
+      "description": "Manage store-specific pricing and inventory",
+      "item": [
+        {
+          "name": "Add Product to Store",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"store_id\": 1,\n  \"product_id\": 1,\n  \"price\": 999.99,\n  \"stock\": 50\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "store-products"
+              ]
+            },
+            "description": "Add a product to a store with specific pricing and stock. Each store can have different prices for the same product."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/store-products",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "store-products"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"store_id\": 1,\n  \"product_id\": 1,\n  \"price\": 999.99,\n  \"stock\": 50,\n  \"is_available\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Store Inventory",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products/store/{{store_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "store-products",
+                "store",
+                "{{store_id}}"
+              ]
+            },
+            "description": "Get all products available in a specific store."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/store-products/store/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "store-products",
+                    "store",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"store_id\": 1,\n    \"product_id\": 1,\n    \"price\": 999.99,\n    \"stock\": 50,\n    \"is_available\": true\n  },\n  {\n    \"id\": 2,\n    \"tenant_id\": 1,\n    \"store_id\": 1,\n    \"product_id\": 2,\n    \"price\": 799.99,\n    \"stock\": 30,\n    \"is_available\": true\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Stores with Product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products/product/{{product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "store-products",
+                "product",
+                "{{product_id}}"
+              ]
+            },
+            "description": "Get all stores that carry a specific product and their pricing."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/store-products/product/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "store-products",
+                    "product",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"store_id\": 1,\n    \"product_id\": 1,\n    \"price\": 999.99,\n    \"stock\": 50\n  },\n  {\n    \"id\": 3,\n    \"tenant_id\": 1,\n    \"store_id\": 2,\n    \"product_id\": 1,\n    \"price\": 989.99,\n    \"stock\": 25\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Store-Product by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products/{{store_product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "store-products",
+                "{{store_product_id}}"
+              ]
+            },
+            "description": "Get a specific store-product entry (inventory record)."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/store-products/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "store-products",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"store_id\": 1,\n  \"product_id\": 1,\n  \"price\": 999.99,\n  \"stock\": 50,\n  \"is_available\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Stock/Price",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 899.99,\n  \"stock\": 40,\n  \"is_available\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products/{{store_product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "store-products",
+                "{{store_product_id}}"
+              ]
+            },
+            "description": "Update pricing, stock, or availability for a product in a store."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/store-products/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "store-products",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"store_id\": 1,\n  \"product_id\": 1,\n  \"price\": 899.99,\n  \"stock\": 40,\n  \"is_available\": true\n}"
+            }
+          ]
+        },
+        {
+          "name": "Remove Product from Store",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products/{{store_product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "store-products",
+                "{{store_product_id}}"
+              ]
+            },
+            "description": "Remove a product from a store's inventory."
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/store-products/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "store-products",
+                    "1"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🛒 Orders (Tenant-Scoped)",
+      "description": "Manage customer orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": 1,\n  \"store_id\": 1,\n  \"total_amount\": 1999.98,\n  \"status\": \"pending\",\n  \"payment_method\": \"card\",\n  \"payment_status\": \"unpaid\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "orders"
+              ]
+            },
+            "description": "Create a new order. Add items to the order using Order Items endpoint."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/orders",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"user_id\": 1,\n  \"store_id\": 1,\n  \"total_amount\": 1999.98,\n  \"status\": \"pending\",\n  \"payment_method\": \"card\",\n  \"payment_status\": \"unpaid\",\n  \"created_at\": \"2024-03-30T11:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "orders"
+              ]
+            },
+            "description": "Get all orders for a tenant."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/orders",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "orders"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"user_id\": 1,\n    \"store_id\": 1,\n    \"total_amount\": 1999.98,\n    \"status\": \"pending\",\n    \"payment_status\": \"unpaid\",\n    \"created_at\": \"2024-03-30T11:00:00\"\n  },\n  {\n    \"id\": 2,\n    \"tenant_id\": 1,\n    \"user_id\": 2,\n    \"store_id\": 1,\n    \"total_amount\": 499.99,\n    \"status\": \"completed\",\n    \"payment_status\": \"paid\",\n    \"created_at\": \"2024-03-30T09:30:00\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get User's Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders/user/{{user_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "orders",
+                "user",
+                "{{user_id}}"
+              ]
+            },
+            "description": "Get all orders placed by a specific user."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/orders/user/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "orders",
+                    "user",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"user_id\": 1,\n    \"store_id\": 1,\n    \"total_amount\": 1999.98,\n    \"status\": \"pending\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Store's Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders/store/{{store_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "orders",
+                "store",
+                "{{store_id}}"
+              ]
+            },
+            "description": "Get all orders placed at a specific store."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/orders/store/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "orders",
+                    "store",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"tenant_id\": 1,\n    \"user_id\": 1,\n    \"store_id\": 1,\n    \"total_amount\": 1999.98,\n    \"status\": \"pending\"\n  },\n  {\n    \"id\": 2,\n    \"tenant_id\": 1,\n    \"user_id\": 2,\n    \"store_id\": 1,\n    \"total_amount\": 499.99,\n    \"status\": \"completed\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Order by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders/{{order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "orders",
+                "{{order_id}}"
+              ]
+            },
+            "description": "Get a specific order by ID."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/orders/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "orders",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"user_id\": 1,\n  \"store_id\": 1,\n  \"total_amount\": 1999.98,\n  \"status\": \"pending\",\n  \"payment_method\": \"card\",\n  \"payment_status\": \"unpaid\",\n  \"created_at\": \"2024-03-30T11:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"completed\",\n  \"payment_status\": \"paid\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders/{{order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "orders",
+                "{{order_id}}"
+              ]
+            },
+            "description": "Update order status (pending, completed, cancelled, etc.) and payment status."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/orders/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "orders",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"tenant_id\": 1,\n  \"user_id\": 1,\n  \"store_id\": 1,\n  \"total_amount\": 1999.98,\n  \"status\": \"completed\",\n  \"payment_status\": \"paid\",\n  \"created_at\": \"2024-03-30T11:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Order",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders/{{order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tenants",
+                "{{tenant_id}}",
+                "orders",
+                "{{order_id}}"
+              ]
+            },
+            "description": "Delete an order. All order items will be deleted."
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/tenants/1/orders/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "tenants",
+                    "1",
+                    "orders",
+                    "1"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📋 Order Items",
+      "description": "Manage items within orders",
+      "item": [
+        {
+          "name": "Add Item to Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"order_id\": 1,\n  \"product_id\": 1,\n  \"quantity\": 2,\n  \"price\": 999.99\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/order-items",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "order-items"
+              ]
+            },
+            "description": "Add a product to an order with quantity and price."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/order-items",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order-items"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"order_id\": 1,\n  \"product_id\": 1,\n  \"quantity\": 2,\n  \"price\": 999.99\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Order Items",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/order-items/order/{{order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "order-items",
+                "order",
+                "{{order_id}}"
+              ]
+            },
+            "description": "Get all items in a specific order."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order-items/order/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order-items",
+                    "order",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"order_id\": 1,\n    \"product_id\": 1,\n    \"quantity\": 2,\n    \"price\": 999.99\n  },\n  {\n    \"id\": 2,\n    \"order_id\": 1,\n    \"product_id\": 2,\n    \"quantity\": 1,\n    \"price\": 799.99\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Order Item by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/order-items/{{order_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "order-items",
+                "{{order_item_id}}"
+              ]
+            },
+            "description": "Get a specific order item by ID."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order-items/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order-items",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"order_id\": 1,\n  \"product_id\": 1,\n  \"quantity\": 2,\n  \"price\": 999.99\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Order Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 3,\n  \"price\": 999.99\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/order-items/{{order_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "order-items",
+                "{{order_item_id}}"
+              ]
+            },
+            "description": "Update quantity or price of an order item."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/order-items/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order-items",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"order_id\": 1,\n  \"product_id\": 1,\n  \"quantity\": 3,\n  \"price\": 999.99\n}"
+            }
+          ]
+        },
+        {
+          "name": "Remove Item from Order",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/order-items/{{order_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "order-items",
+                "{{order_item_id}}"
+              ]
+            },
+            "description": "Remove an item from an order."
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/order-items/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "order-items",
+                    "1"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "tenant_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "store_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "category_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "product_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "store_product_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "order_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "order_item_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "subdomain",
+      "value": "bestmart",
+      "type": "string"
+    },
+    {
+      "key": "phone",
+      "value": "+9876543210",
+      "type": "string"
+    }
+  ]
+}
+

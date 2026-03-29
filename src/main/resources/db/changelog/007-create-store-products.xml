@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="007" author="prabhat">
+        <createTable tableName="store_products">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="tenant_id" type="BIGINT"/>
+            <column name="store_id" type="BIGINT"/>
+            <column name="product_id" type="BIGINT"/>
+            <column name="price" type="DECIMAL(10,2)"/>
+            <column name="stock" type="INT"/>
+            <column name="is_available" type="BOOLEAN" defaultValueBoolean="true"/>
+        </createTable>
+
+        <addUniqueConstraint tableName="store_products"
+                             columnNames="store_id, product_id"
+                             constraintName="uk_store_product"/>
+    </changeSet>
+
+</databaseChangeLog>
