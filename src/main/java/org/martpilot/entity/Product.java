@@ -1,50 +1,53 @@
 package org.martpilot.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "products")
+@SQLDelete(sql = "UPDATE products SET deleted_at = NOW() WHERE id = ?")
+@Where(clause = "deleted_at IS NULL")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Builder
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@AllArgsConstructor
+@NoArgsConstructor
+public class Product extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_id", nullable = false, foreignKey = @ForeignKey(name = "fk_product_tenant"))
+    @JoinColumn(name = "tenant_id")
     private Tenant tenant;
 
-    @Column(name = "name", length = 150)
-    private String name;
-
-    @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "fk_product_category"))
+    @JoinColumn(name = "category_id")
     private Category category;
 
-    @Column(name = "image_url", columnDefinition = "TEXT")
-    private String imageUrl;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
 
-    @Column(name = "brand", length = 100)
+    @Column(length = 150)
+    private String name;
+
+    @Column(length = 255)
+    private String description;
+
+    @Column(length = 100)
     private String brand;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<StoreProduct> storeProducts = new HashSet<>();
+    @Column(length = 100, unique = true)
+    private String sku;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<OrderItem> orderItems = new HashSet<>();
+    @Column(name = "image_url", length = 255)
+    private String imageUrl;
+
+    @Column(length = 255)
+    private String tags;
+
+    @Column(length = 20)
+    private String status;
+
 }
 

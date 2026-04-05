@@ -1,53 +1,45 @@
 package org.martpilot.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "store_products", uniqueConstraints = {
-    @UniqueConstraint(name = "uk_store_product", columnNames = {"store_id", "product_id"})
-})
+@Table(name = "store_products")
+@SQLDelete(sql = "UPDATE store_products SET deleted_at = NOW() WHERE id = ?")
+@Where(clause = "deleted_at IS NULL")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Builder
-public class StoreProduct {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class StoreProduct extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_id", nullable = false, foreignKey = @ForeignKey(name = "fk_store_product_tenant"))
+    @JoinColumn(name = "tenant_id")
     private Tenant tenant;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id", nullable = false, foreignKey = @ForeignKey(name = "fk_store_product_store"))
+    @JoinColumn(name = "store_id")
     private Store store;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false, foreignKey = @ForeignKey(name = "fk_store_product_product"))
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "price", precision = 10, scale = 2, nullable = false)
+    @Column(precision = 10, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "stock", nullable = false)
-    private Integer stock;
+    @Column(name = "discount_price", precision = 10, scale = 2)
+    private BigDecimal discountPrice;
 
-    @Column(name = "is_available", columnDefinition = "BOOLEAN DEFAULT true")
-    private Boolean isAvailable;
+    @Column(name = "stock_quantity")
+    private Integer stockQuantity;
 
-    @PrePersist
-    protected void onCreate() {
-        if (isAvailable == null) {
-            isAvailable = true;
-        }
-    }
+    @Column(name = "is_available", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    private Boolean isAvailable = true;
 }
 

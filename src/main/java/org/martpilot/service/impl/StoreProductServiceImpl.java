@@ -45,7 +45,7 @@ public class StoreProductServiceImpl implements StoreProductService {
                 .store(store)
                 .product(product)
                 .price(storeProductDTO.getPrice())
-                .stock(storeProductDTO.getStock())
+                .stockQuantity(storeProductDTO.getStock())
                 .isAvailable(true)
                 .build();
         
@@ -104,7 +104,7 @@ public class StoreProductServiceImpl implements StoreProductService {
             storeProduct.setPrice(storeProductDTO.getPrice());
         }
         if (storeProductDTO.getStock() != null) {
-            storeProduct.setStock(storeProductDTO.getStock());
+            storeProduct.setStockQuantity(storeProductDTO.getStock());
         }
         if (storeProductDTO.getIsAvailable() != null) {
             storeProduct.setIsAvailable(storeProductDTO.getIsAvailable());
@@ -136,7 +136,7 @@ public class StoreProductServiceImpl implements StoreProductService {
                 .storeId(storeProduct.getStore().getId())
                 .productId(storeProduct.getProduct().getId())
                 .price(storeProduct.getPrice())
-                .stock(storeProduct.getStock())
+                .stock(storeProduct.getStockQuantity())
                 .isAvailable(storeProduct.getIsAvailable())
                 .build();
     }

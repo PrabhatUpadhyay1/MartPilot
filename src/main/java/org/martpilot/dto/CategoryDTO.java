@@ -22,7 +22,7 @@ public class CategoryDTO {
     @JsonProperty("image_url")
     private String imageUrl;
 
-    @JsonProperty("parent_id")
-    private Long parentId;
+    @JsonProperty("store_id")
+    private Long storeId;
 }
 

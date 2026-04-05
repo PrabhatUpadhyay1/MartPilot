@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="008" author="prabhat">
+    <changeSet id="008-create-order" author="prabhat">
         <createTable tableName="orders">
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true"/>
@@ -16,8 +16,12 @@
             <column name="status" type="VARCHAR(50)"/>
             <column name="payment_method" type="VARCHAR(20)"/>
             <column name="payment_status" type="VARCHAR(20)"/>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-        </createTable>
+            <column name="delivery_address" type="VARCHAR(255)"/>
+            <column name="deleted_at" type="TIMESTAMP" />
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" />        </createTable>
     </changeSet>
 
 </databaseChangeLog>

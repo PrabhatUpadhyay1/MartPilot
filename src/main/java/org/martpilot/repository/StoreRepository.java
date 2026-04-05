@@ -16,7 +16,7 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
 
     Optional<Store> findByIdAndTenantId(Long id, Long tenantId);
 
-    @Query("SELECT s FROM Store s WHERE s.tenant.id = :tenantId AND s.isActive = true")
+    @Query("SELECT s FROM Store s WHERE s.tenant.id = :tenantId AND s.status = 'ACTIVE'")
     List<Store> findActiveStoresByTenantId(@Param("tenantId") Long tenantId);
 }
 

@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface ProductService {
 
-    ProductDTO create(Long tenantId, ProductDTO productDTO);
+    ProductDTO create(Long categoryId, ProductDTO productDTO);
 
     ProductDTO getById(Long tenantId, Long productId);
 
-    List<ProductDTO> getByTenantId(Long tenantId);
+    List<ProductDTO> getByTenantId(Long tenantId, Long storeId);
 
     List<ProductDTO> getByTenantIdAndCategoryId(Long tenantId, Long categoryId);
 

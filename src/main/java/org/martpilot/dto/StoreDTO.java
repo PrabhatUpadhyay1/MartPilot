@@ -28,6 +28,6 @@ public class StoreDTO {
     private BigDecimal longitude;
 
     @JsonProperty("is_active")
-    private Boolean isActive;
+    private String isActive;
 }
 

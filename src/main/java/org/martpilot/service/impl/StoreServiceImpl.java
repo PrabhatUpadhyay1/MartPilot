@@ -24,9 +24,9 @@ public class StoreServiceImpl implements StoreService {
     private final TenantRepository tenantRepository;
 
     @Override
-    public StoreDTO create(Long tenantId, StoreDTO storeDTO) {
-        Tenant tenant = tenantRepository.findById(tenantId)
-                .orElseThrow(() -> new ResourceNotFoundException("Tenant", "id", tenantId));
+    public StoreDTO create(StoreDTO storeDTO) {
+        Tenant tenant = tenantRepository.findById(storeDTO.getTenantId())
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant", "id", storeDTO.getTenantId()));
         
         Store store = Store.builder()
                 .tenant(tenant)
@@ -34,7 +34,7 @@ public class StoreServiceImpl implements StoreService {
                 .address(storeDTO.getAddress())
                 .latitude(storeDTO.getLatitude())
                 .longitude(storeDTO.getLongitude())
-                .isActive(true)
+                .status("ACTIVE")
                 .build();
         
         Store savedStore = storeRepository.save(store);
@@ -89,7 +89,7 @@ public class StoreServiceImpl implements StoreService {
             store.setLongitude(storeDTO.getLongitude());
         }
         if (storeDTO.getIsActive() != null) {
-            store.setIsActive(storeDTO.getIsActive());
+            store.setState(storeDTO.getIsActive());
         }
         
         Store updatedStore = storeRepository.save(store);
@@ -119,7 +119,7 @@ public class StoreServiceImpl implements StoreService {
                 .address(store.getAddress())
                 .latitude(store.getLatitude())
                 .longitude(store.getLongitude())
-                .isActive(store.getIsActive())
+                .isActive(store.getState())
                 .build();
     }
 }

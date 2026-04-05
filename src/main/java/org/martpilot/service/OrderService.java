@@ -1,9 +1,11 @@
 package org.martpilot.service;
 
 import org.martpilot.dto.OrderDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface OrderService {
 
     OrderDTO create(Long tenantId, OrderDTO orderDTO);

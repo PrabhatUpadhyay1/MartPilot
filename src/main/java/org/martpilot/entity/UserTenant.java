@@ -5,15 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_tenants", uniqueConstraints = {
-    @UniqueConstraint(name = "uk_user_tenant", columnNames = {"user_id", "tenant_id"})
-})
+@Table(name = "user_tenants",
+       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "tenant_id"}))
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@EntityListeners(AuditingEntityListener.class)
 public class UserTenant {
 
     @Id
@@ -21,11 +25,21 @@ public class UserTenant {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_user_tenant_user"))
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_id", nullable = false, foreignKey = @ForeignKey(name = "fk_user_tenant_tenant"))
+    @JoinColumn(name = "tenant_id")
     private Tenant tenant;
+
+    @Column(length = 50)
+    private String role;
+
+    @Column(name = "store_id")
+    private Long storeId;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 }
 

@@ -24,6 +24,9 @@ public class ProductDTO {
     @JsonProperty("category_id")
     private Long categoryId;
 
+    @JsonProperty("store_id")
+    private Long storeId;
+
     @JsonProperty("image_url")
     private String imageUrl;
 

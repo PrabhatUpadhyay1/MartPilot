@@ -2,48 +2,80 @@ package org.martpilot.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
-    @UniqueConstraint(name = "uk_user_phone", columnNames = "phone")
-})
+@Table(name = "users")
+@SQLDelete(sql = "UPDATE users SET deleted_at = NOW() WHERE id = ?")
+@Where(clause = "deleted_at IS NULL")
 @Data
-@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-@Builder
-public class User {
+@NoArgsConstructor
+public class User extends BaseEntity implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @NotBlank
+    @Column(length = 100)
+    private String firstName;
 
-    @Column(name = "name", length = 100)
-    private String name;
+    @Column(length = 100)
+    private String lastName;
 
-    @Column(name = "phone", length = 15, nullable = false, unique = true)
+    @NotBlank
+    @Email
+    @Column(unique = true, length = 150)
+    private String email;
+
+    @Column(length = 20)
     private String phone;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
+    @Column(length = 255)
+    private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<UserTenant> userTenants = new HashSet<>();
+    @Column(length = 20)
+    private String status = "ACTIVE";
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Order> orders = new HashSet<>();
+    // UserDetails implementation
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.emptyList(); // Role comes from user_tenants per tenant context
+    }
 
-    @PrePersist
-    protected void onCreate() {
-        if (createdAt == null) {
-            createdAt = LocalDateTime.now();
-        }
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return "ACTIVE".equals(status);
     }
 }
 

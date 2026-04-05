@@ -10,11 +10,7 @@ public interface CategoryService {
 
     CategoryDTO getById(Long tenantId, Long categoryId);
 
-    List<CategoryDTO> getByTenantId(Long tenantId);
-
-    List<CategoryDTO> getRootCategoriesByTenantId(Long tenantId);
-
-    List<CategoryDTO> getSubCategoriesByParentId(Long parentId);
+    List<CategoryDTO> getByTenantId(Long tenantId, Long storeId);
 
     CategoryDTO update(Long tenantId, Long categoryId, CategoryDTO categoryDTO);
 

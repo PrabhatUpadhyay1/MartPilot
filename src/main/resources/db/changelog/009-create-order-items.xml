@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="009" author="prabhat">
+    <changeSet id="009-create-order-items" author="prabhat">
         <createTable tableName="order_items">
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true"/>
@@ -13,6 +13,12 @@
             <column name="product_id" type="BIGINT"/>
             <column name="quantity" type="INT"/>
             <column name="price" type="DECIMAL(10,2)"/>
+            <column name="total_price" type="DECIMAL(10,2)"/>
+            <column name="deleted_at" type="TIMESTAMP" />
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" />
         </createTable>
     </changeSet>
 

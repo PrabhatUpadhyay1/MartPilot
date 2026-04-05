@@ -24,12 +24,10 @@ public class TenantServiceImpl implements TenantService {
         Tenant tenant = Tenant.builder()
                 .businessName(tenantDTO.getBusinessName())
                 .subdomain(tenantDTO.getSubdomain())
-                .customDomain(tenantDTO.getCustomDomain())
                 .ownerName(tenantDTO.getOwnerName())
                 .phone(tenantDTO.getPhone())
                 .email(tenantDTO.getEmail())
                 .subscriptionPlan(tenantDTO.getSubscriptionPlan())
-                .isActive(true)
                 .build();
         
         Tenant savedTenant = tenantRepository.save(tenant);
@@ -64,7 +62,7 @@ public class TenantServiceImpl implements TenantService {
     @Override
     @Transactional(readOnly = true)
     public List<TenantDTO> getAllActive() {
-        return tenantRepository.findAllActive()
+        return tenantRepository.findActiveTenant    ()
                 .stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
@@ -78,9 +76,9 @@ public class TenantServiceImpl implements TenantService {
         if (tenantDTO.getBusinessName() != null) {
             tenant.setBusinessName(tenantDTO.getBusinessName());
         }
-        if (tenantDTO.getCustomDomain() != null) {
-            tenant.setCustomDomain(tenantDTO.getCustomDomain());
-        }
+//        if (tenantDTO.getCustomDomain() != null) {
+//            tenant.setCustomDomain(tenantDTO.getCustomDomain());
+//        }
         if (tenantDTO.getOwnerName() != null) {
             tenant.setOwnerName(tenantDTO.getOwnerName());
         }
@@ -94,7 +92,7 @@ public class TenantServiceImpl implements TenantService {
             tenant.setSubscriptionPlan(tenantDTO.getSubscriptionPlan());
         }
         if (tenantDTO.getIsActive() != null) {
-            tenant.setIsActive(tenantDTO.getIsActive());
+            tenant.setStatus(tenantDTO.getIsActive());
         }
         
         Tenant updatedTenant = tenantRepository.save(tenant);
@@ -113,12 +111,12 @@ public class TenantServiceImpl implements TenantService {
                 .id(tenant.getId())
                 .businessName(tenant.getBusinessName())
                 .subdomain(tenant.getSubdomain())
-                .customDomain(tenant.getCustomDomain())
+//                .customDomain(tenant.getCustomDomain())
                 .ownerName(tenant.getOwnerName())
                 .phone(tenant.getPhone())
                 .email(tenant.getEmail())
                 .subscriptionPlan(tenant.getSubscriptionPlan())
-                .isActive(tenant.getIsActive())
+                .isActive(tenant.getStatus())
                 .createdAt(tenant.getCreatedAt())
                 .build();
     }

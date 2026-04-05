@@ -3,16 +3,19 @@ package org.martpilot.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.martpilot.dto.CategoryDTO;
 import org.martpilot.entity.Category;
+import org.martpilot.entity.Store;
 import org.martpilot.entity.Tenant;
 import org.martpilot.exception.ResourceNotFoundException;
 import org.martpilot.exception.TenantAccessDeniedException;
 import org.martpilot.repository.CategoryRepository;
+import org.martpilot.repository.StoreRepository;
 import org.martpilot.repository.TenantRepository;
 import org.martpilot.service.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,24 +24,24 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final StoreRepository storeRepository;
     private final TenantRepository tenantRepository;
 
     @Override
     public CategoryDTO create(Long tenantId, CategoryDTO categoryDTO) {
         Tenant tenant = tenantRepository.findById(tenantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Tenant", "id", tenantId));
-        
-        Category parentCategory = null;
-        if (categoryDTO.getParentId() != null) {
-            parentCategory = categoryRepository.findByIdAndTenantId(categoryDTO.getParentId(), tenantId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Parent Category", "id", categoryDTO.getParentId()));
+
+        Store store = null;
+        if (categoryDTO.getStoreId() != null) {
+            store = storeRepository.findByIdAndTenantId(categoryDTO.getStoreId(), tenantId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Store is not present", "id", categoryDTO.getStoreId()));
         }
-        
         Category category = Category.builder()
                 .tenant(tenant)
                 .name(categoryDTO.getName())
                 .imageUrl(categoryDTO.getImageUrl())
-                .parentCategory(parentCategory)
+                .store(store)
                 .build();
         
         Category savedCategory = categoryRepository.save(category);
@@ -57,30 +60,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<CategoryDTO> getByTenantId(Long tenantId) {
-        return categoryRepository.findByTenantId(tenantId)
+    public List<CategoryDTO> getByTenantId(Long tenantId, Long storeId) {
+        return categoryRepository.findByTenantIdAndStoreId(tenantId, storeId)
                 .stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<CategoryDTO> getRootCategoriesByTenantId(Long tenantId) {
-        return categoryRepository.findByTenantIdAndParentCategoryIsNull(tenantId)
-                .stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<CategoryDTO> getSubCategoriesByParentId(Long parentId) {
-        return categoryRepository.findByParentCategoryId(parentId)
-                .stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public CategoryDTO update(Long tenantId, Long categoryId, CategoryDTO categoryDTO) {
@@ -121,7 +107,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .tenantId(category.getTenant().getId())
                 .name(category.getName())
                 .imageUrl(category.getImageUrl())
-                .parentId(category.getParentCategory() != null ? category.getParentCategory().getId() : null)
+                .storeId(category.getStore() != null ? category.getStore().getId() : null)
                 .build();
     }
 }

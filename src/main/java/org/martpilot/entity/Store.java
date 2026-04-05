@@ -1,57 +1,62 @@
 package org.martpilot.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "stores")
+@SQLDelete(sql = "UPDATE stores SET deleted_at = NOW() WHERE id = ?")
+@Where(clause = "deleted_at IS NULL")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Builder
-public class Store {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@AllArgsConstructor
+@NoArgsConstructor
+public class Store extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_id", nullable = false, foreignKey = @ForeignKey(name = "fk_store_tenant"))
+    @JoinColumn(name = "tenant_id")
     private Tenant tenant;
 
-    @Column(name = "name", length = 100)
+    @Column(length = 150)
     private String name;
 
-    @Column(name = "address", columnDefinition = "TEXT")
+    @Column(length = 255)
     private String address;
 
-    @Column(name = "latitude", precision = 10, scale = 7)
+    @Column(length = 100)
+    private String city;
+
+    @Column(length = 100)
+    private String state;
+
+    @Column(length = 20)
+    private String pincode;
+
+    @Column(precision = 10, scale = 8)
     private BigDecimal latitude;
 
-    @Column(name = "longitude", precision = 10, scale = 7)
+    @Column(precision = 11, scale = 8)
     private BigDecimal longitude;
 
-    @Column(name = "is_active", columnDefinition = "BOOLEAN DEFAULT true")
-    private Boolean isActive;
+    @Column(length = 20)
+    private String phone;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<StoreProduct> storeProducts = new HashSet<>();
+    @Column(length = 150)
+    private String email;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Order> orders = new HashSet<>();
+    @Column(name = "opening_time")
+    private LocalTime openingTime;
 
-    @PrePersist
-    protected void onCreate() {
-        if (isActive == null) {
-            isActive = true;
-        }
-    }
+    @Column(name = "closing_time")
+    private LocalTime closingTime;
+
+    @Column(name = "status", length = 20)
+    private String status = "ACTIVE";
 }
 

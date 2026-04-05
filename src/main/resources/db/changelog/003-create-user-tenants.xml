@@ -4,30 +4,29 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="003" author="prabhat">
+    <changeSet id="003-create-user-tenants" author="martpilot">
         <createTable tableName="user_tenants">
-            <column name="id" type="BIGSERIAL">
+            <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="user_id" type="BIGINT"/>
-            <column name="tenant_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT" />
+            <column name="tenant_id" type="BIGINT" />
+            <column name="role" type="VARCHAR(50)" />
+            <column name="store_id" type="BIGINT" />
+            <column name="deleted_at" type="TIMESTAMP" />
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" />
         </createTable>
-
-        <addForeignKeyConstraint baseTableName="user_tenants"
-                                 baseColumnNames="user_id"
-                                 referencedTableName="users"
-                                 referencedColumnNames="id"
-                                 constraintName="fk_user_tenant_user"/>
-
-        <addForeignKeyConstraint baseTableName="user_tenants"
-                                 baseColumnNames="tenant_id"
-                                 referencedTableName="tenants"
-                                 referencedColumnNames="id"
-                                 constraintName="fk_user_tenant_tenant"/>
-
-        <addUniqueConstraint tableName="user_tenants"
-                             columnNames="user_id, tenant_id"
-                             constraintName="uk_user_tenant"/>
+        <addForeignKeyConstraint baseTableName="user_tenants" baseColumnNames="user_id"
+                                 referencedTableName="users" referencedColumnNames="id"
+                                 constraintName="fk_user_tenants_user" />
+        <addForeignKeyConstraint baseTableName="user_tenants" baseColumnNames="tenant_id"
+                                 referencedTableName="tenants" referencedColumnNames="id"
+                                 constraintName="fk_user_tenants_tenant" />
+<!--        <createUniqueIndex tableName="user_tenants" columnNames="user_id, tenant_id" indexName="idx_user_tenants_unique" />-->
+<!--        <createIndex tableName="user_tenants" columnNames="tenant_id" indexName="idx_user_tenants_tenant" />-->
     </changeSet>
 
 </databaseChangeLog>

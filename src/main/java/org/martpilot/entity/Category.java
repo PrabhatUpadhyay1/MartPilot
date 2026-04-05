@@ -1,44 +1,36 @@
 package org.martpilot.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
-import java.util.Set;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "categories")
+@SQLDelete(sql = "UPDATE categories SET deleted_at = NOW() WHERE id = ?")
+@Where(clause = "deleted_at IS NULL")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Builder
-public class Category {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@AllArgsConstructor
+@NoArgsConstructor
+public class Category extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tenant_id", nullable = false, foreignKey = @ForeignKey(name = "fk_category_tenant"))
+    @JoinColumn(name = "tenant_id")
     private Tenant tenant;
 
-    @Column(name = "name", length = 100)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
+
+    @Column(length = 150)
     private String name;
 
-    @Column(name = "image_url", columnDefinition = "TEXT")
+    @Column(name = "image_url", length = 255)
     private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id", foreignKey = @ForeignKey(name = "fk_category_parent"))
-    private Category parentCategory;
-
-    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Category> subCategories = new HashSet<>();
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Product> products = new HashSet<>();
+    @Column(length = 20)
+    private String status;
 }
 

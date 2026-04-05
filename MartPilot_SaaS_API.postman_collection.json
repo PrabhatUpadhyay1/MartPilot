@@ -8,6 +8,244 @@
   },
   "item": [
     {
+      "name": "🔐 Authentication",
+      "description": "User authentication and authorization endpoints",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "1"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+1234567890\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/register",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Register a new user for a tenant. Requires X-Tenant-ID header."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/register",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"success\": true,\n  \"message\": \"User registered successfully\",\n  \"data\": {\n    \"userId\": 1,\n    \"email\": \"john@example.com\",\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"tokenType\": \"Bearer\",\n    \"expiresIn\": 900\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "1"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Login with email and password. Requires X-Tenant-ID header."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/login",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"userId\": 1,\n    \"email\": \"john@example.com\",\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"tokenType\": \"Bearer\",\n    \"expiresIn\": 900\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...refresh_token_here\""
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/refresh-token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh-token"
+              ]
+            },
+            "description": "Refresh access token using refresh token. Requires X-Tenant-ID header."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/refresh-token",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "refresh-token"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Token refreshed\",\n  \"data\": {\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"tokenType\": \"Bearer\",\n    \"expiresIn\": 900\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/auth/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout"
+              ]
+            },
+            "description": "Logout and invalidate the current token."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/v1/auth/logout",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "logout"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"success\": true,\n  \"message\": \"Logged out successfully\",\n  \"data\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "🏢 Tenants",
       "description": "Manage tenant organizations (SaaS accounts)",
       "item": [
@@ -26,7 +264,7 @@
               "raw": "{\n  \"business_name\": \"Best Mart Electronics\",\n  \"subdomain\": \"bestmart\",\n  \"custom_domain\": \"bestmart.com\",\n  \"owner_name\": \"John Doe\",\n  \"phone\": \"+1234567890\",\n  \"email\": \"john@bestmart.com\",\n  \"subscription_plan\": \"premium\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants",
+              "raw": "{{base_url}}/api/v1/tenants",
               "host": [
                 "{{base_url}}"
               ],
@@ -47,7 +285,7 @@
                   "raw": ""
                 },
                 "url": {
-                  "raw": "{{base_url}}/tenants",
+                  "raw": "{{base_url}}/api/v1/tenants",
                   "host": [
                     "{{base_url}}"
                   ],
@@ -68,7 +306,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants",
+              "raw": "{{base_url}}/api/v1/tenants",
               "host": [
                 "{{base_url}}"
               ],
@@ -85,7 +323,7 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/tenants",
+                  "raw": "{{base_url}}/api/v1/tenants",
                   "host": [
                     "{{base_url}}"
                   ],
@@ -146,7 +384,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -237,7 +475,7 @@
               "raw": "{\n  \"business_name\": \"Best Mart Electronics - Updated\",\n  \"subscription_plan\": \"enterprise\",\n  \"is_active\": true\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -281,7 +519,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -606,7 +844,7 @@
               "raw": "{\n  \"user_id\": 1,\n  \"tenant_id\": 1\n}"
             },
             "url": {
-              "raw": "{{base_url}}/user-tenants",
+              "raw": "{{base_url}}/api/v1/user-tenants",
               "host": [
                 "{{base_url}}"
               ],
@@ -627,7 +865,7 @@
                   "raw": ""
                 },
                 "url": {
-                  "raw": "{{base_url}}/user-tenants",
+                  "raw": "{{base_url}}/api/v1/user-tenants",
                   "host": [
                     "{{base_url}}"
                   ],
@@ -832,6 +1070,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
               }
             ],
             "body": {
@@ -839,17 +1081,19 @@
               "raw": "{\n  \"name\": \"Best Mart - Downtown\",\n  \"address\": \"123 Main Street, New York, NY 10001\",\n  \"latitude\": 40.7128,\n  \"longitude\": -74.0060\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores",
+              "raw": "{{base_url}}/api/v1/stores",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "tenants",
                 "{{tenant_id}}",
                 "stores"
               ]
             },
-            "description": "Create a new store for the tenant. Includes location coordinates for geolocation."
+            "description": "Create a new store for the tenant. Includes location coordinates for geolocation. Requires SUPER_ADMIN or TENANT_ADMIN role."
           },
           "response": [
             {
@@ -862,11 +1106,13 @@
                   "raw": ""
                 },
                 "url": {
-                  "raw": "{{base_url}}/tenants/1/stores",
+                  "raw": "{{base_url}}/api/v1/tenants/1/stores",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
+                    "api",
+                    "v1",
                     "tenants",
                     "1",
                     "stores"
@@ -883,19 +1129,26 @@
           "name": "Get All Stores",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores",
+              "raw": "{{base_url}}/api/v1/stores",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "tenants",
                 "{{tenant_id}}",
                 "stores"
               ]
             },
-            "description": "Get all stores for a tenant."
+            "description": "Get all stores for a tenant. Requires SUPER_ADMIN or TENANT_ADMIN role."
           },
           "response": [
             {
@@ -904,11 +1157,13 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/tenants/1/stores",
+                  "raw": "{{base_url}}/api/v1/tenants/1/stores",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
+                    "api",
+                    "v1",
                     "tenants",
                     "1",
                     "stores"
@@ -925,20 +1180,27 @@
           "name": "Get Active Stores",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores/active",
+              "raw": "{{base_url}}/api/v1/stores/active",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "tenants",
                 "{{tenant_id}}",
                 "stores",
                 "active"
               ]
             },
-            "description": "Get only active stores for a tenant."
+            "description": "Get only active stores for a tenant. Requires SUPER_ADMIN or TENANT_ADMIN role."
           },
           "response": [
             {
@@ -947,11 +1209,13 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/tenants/1/stores/active",
+                  "raw": "{{base_url}}/api/v1/tenants/1/stores/active",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
+                    "api",
+                    "v1",
                     "tenants",
                     "1",
                     "stores",
@@ -969,20 +1233,27 @@
           "name": "Get Store by ID",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores/{{store_id}}",
+              "raw": "{{base_url}}/api/v1/stores/{{store_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "tenants",
                 "{{tenant_id}}",
                 "stores",
                 "{{store_id}}"
               ]
             },
-            "description": "Get a specific store by ID."
+            "description": "Get a specific store by ID. Requires SUPER_ADMIN or TENANT_ADMIN role."
           },
           "response": [
             {
@@ -991,11 +1262,13 @@
                 "method": "GET",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/tenants/1/stores/1",
+                  "raw": "{{base_url}}/api/v1/tenants/1/stores/1",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
+                    "api",
+                    "v1",
                     "tenants",
                     "1",
                     "stores",
@@ -1017,6 +1290,10 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
               }
             ],
             "body": {
@@ -1024,18 +1301,20 @@
               "raw": "{\n  \"name\": \"Best Mart - Downtown (Updated)\",\n  \"address\": \"123 Main Street, Suite 100, New York, NY 10001\",\n  \"is_active\": false\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores/{{store_id}}",
+              "raw": "{{base_url}}/api/v1/stores/{{store_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "tenants",
                 "{{tenant_id}}",
                 "stores",
                 "{{store_id}}"
               ]
             },
-            "description": "Update store details."
+            "description": "Update store details. Requires SUPER_ADMIN or TENANT_ADMIN role."
           },
           "response": [
             {
@@ -1048,11 +1327,13 @@
                   "raw": ""
                 },
                 "url": {
-                  "raw": "{{base_url}}/tenants/1/stores/1",
+                  "raw": "{{base_url}}/api/v1/tenants/1/stores/1",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
+                    "api",
+                    "v1",
                     "tenants",
                     "1",
                     "stores",
@@ -1070,20 +1351,27 @@
           "name": "Delete Store",
           "request": {
             "method": "DELETE",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/stores/{{store_id}}",
+              "raw": "{{base_url}}/api/v1/stores/{{store_id}}",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "tenants",
                 "{{tenant_id}}",
                 "stores",
                 "{{store_id}}"
               ]
             },
-            "description": "Delete a store. All associated products and orders will be deleted."
+            "description": "Delete a store. All associated products and orders will be deleted. Requires SUPER_ADMIN or TENANT_ADMIN role."
           },
           "response": [
             {
@@ -1092,11 +1380,13 @@
                 "method": "DELETE",
                 "header": [],
                 "url": {
-                  "raw": "{{base_url}}/tenants/1/stores/1",
+                  "raw": "{{base_url}}/api/v1/tenants/1/stores/1",
                   "host": [
                     "{{base_url}}"
                   ],
                   "path": [
+                    "api",
+                    "v1",
                     "tenants",
                     "1",
                     "stores",
@@ -1131,11 +1421,13 @@
               "raw": "{\n  \"name\": \"Electronics\",\n  \"image_url\": \"https://example.com/categories/electronics.jpg\",\n  \"parent_id\": null\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/categories",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "tenants",
                 "{{tenant_id}}",
                 "categories"
@@ -1186,11 +1478,13 @@
               "raw": "{\n  \"name\": \"Laptops\",\n  \"image_url\": \"https://example.com/categories/laptops.jpg\",\n  \"parent_id\": 1\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/categories",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "tenants",
                 "{{tenant_id}}",
                 "categories"
@@ -1232,11 +1526,13 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/categories",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
+                "api",
+                "v1",
                 "tenants",
                 "{{tenant_id}}",
                 "categories"
@@ -1274,7 +1570,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories/root",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/categories/root",
               "host": [
                 "{{base_url}}"
               ],
@@ -1318,7 +1614,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories/{{category_id}}/sub-categories",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/categories/{{category_id}}/sub-categories",
               "host": [
                 "{{base_url}}"
               ],
@@ -1364,7 +1660,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories/{{category_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/categories/{{category_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -1417,7 +1713,7 @@
               "raw": "{\n  \"name\": \"Electronics & Gadgets\",\n  \"image_url\": \"https://example.com/categories/electronics-updated.jpg\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories/{{category_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/categories/{{category_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -1465,7 +1761,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/categories/{{category_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/categories/{{category_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -1524,7 +1820,7 @@
               "raw": "{\n  \"name\": \"Dell XPS 13 Laptop\",\n  \"description\": \"Ultra-portable 13-inch FHD touchscreen laptop with Intel Core i7, 16GB RAM, 512GB SSD\",\n  \"category_id\": 2,\n  \"image_url\": \"https://example.com/products/dell-xps-13.jpg\",\n  \"brand\": \"Dell\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/products",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/products",
               "host": [
                 "{{base_url}}"
               ],
@@ -1570,7 +1866,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/products",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/products",
               "host": [
                 "{{base_url}}"
               ],
@@ -1612,7 +1908,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/products/category/{{category_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/products/category/{{category_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -1658,7 +1954,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/products/{{product_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/products/{{product_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -1711,7 +2007,7 @@
               "raw": "{\n  \"name\": \"Dell XPS 13 Laptop - 2024 Edition\",\n  \"description\": \"New 2024 model with Intel Core i9, 32GB RAM, 1TB SSD\",\n  \"brand\": \"Dell\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/products/{{product_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/products/{{product_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -1759,7 +2055,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/products/{{product_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/products/{{product_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -1818,7 +2114,7 @@
               "raw": "{\n  \"store_id\": 1,\n  \"product_id\": 1,\n  \"price\": 999.99,\n  \"stock\": 50\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/store-products",
               "host": [
                 "{{base_url}}"
               ],
@@ -1864,7 +2160,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products/store/{{store_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/store-products/store/{{store_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -1910,7 +2206,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products/product/{{product_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/store-products/product/{{product_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -1956,7 +2252,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products/{{store_product_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/store-products/{{store_product_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -2009,7 +2305,7 @@
               "raw": "{\n  \"price\": 899.99,\n  \"stock\": 40,\n  \"is_available\": true\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products/{{store_product_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/store-products/{{store_product_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -2057,7 +2353,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/store-products/{{store_product_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/store-products/{{store_product_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -2116,7 +2412,7 @@
               "raw": "{\n  \"user_id\": 1,\n  \"store_id\": 1,\n  \"total_amount\": 1999.98,\n  \"status\": \"pending\",\n  \"payment_method\": \"card\",\n  \"payment_status\": \"unpaid\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/orders",
               "host": [
                 "{{base_url}}"
               ],
@@ -2162,7 +2458,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/orders",
               "host": [
                 "{{base_url}}"
               ],
@@ -2204,7 +2500,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders/user/{{user_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/orders/user/{{user_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -2250,7 +2546,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders/store/{{store_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/orders/store/{{store_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -2296,7 +2592,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders/{{order_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/orders/{{order_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -2349,7 +2645,7 @@
               "raw": "{\n  \"status\": \"completed\",\n  \"payment_status\": \"paid\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders/{{order_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/orders/{{order_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -2397,7 +2693,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "{{base_url}}/tenants/{{tenant_id}}/orders/{{order_id}}",
+              "raw": "{{base_url}}/api/v1/tenants/{{tenant_id}}/orders/{{order_id}}",
               "host": [
                 "{{base_url}}"
               ],
@@ -2668,6 +2964,453 @@
           ]
         }
       ]
+    },
+    {
+      "name": "🛒 Cart (Tenant-Scoped)",
+      "description": "Shopping cart operations for users",
+      "item": [
+        {
+          "name": "Create Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"storeId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/carts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "carts"
+              ]
+            },
+            "description": "Create a new cart for the authenticated user in a specific store."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/carts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "carts"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"userId\": 1,\n  \"storeId\": 1,\n  \"createdAt\": \"2024-03-30T12:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get User Carts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/carts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "carts"
+              ]
+            },
+            "description": "Get all carts for the authenticated user."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/carts",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "carts"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"userId\": 1,\n    \"storeId\": 1,\n    \"createdAt\": \"2024-03-30T12:00:00\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Cart by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/carts/{{cart_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "carts",
+                "{{cart_id}}"
+              ]
+            },
+            "description": "Get a specific cart by ID."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/carts/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "carts",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"userId\": 1,\n  \"storeId\": 1,\n  \"createdAt\": \"2024-03-30T12:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/carts/{{cart_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "carts",
+                "{{cart_id}}"
+              ]
+            },
+            "description": "Delete a cart by ID."
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/carts/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "carts",
+                    "1"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "💳 Payment (Tenant-Scoped)",
+      "description": "Payment processing endpoints",
+      "item": [
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": 1,\n  \"paymentGateway\": \"stripe\",\n  \"amount\": 1999.98\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/payments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments"
+              ]
+            },
+            "description": "Create a new payment for an order."
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/payments",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "payments"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "body": "{\n  \"id\": 1,\n  \"orderId\": 1,\n  \"paymentGateway\": \"stripe\",\n  \"paymentId\": \"pay_abc123\",\n  \"status\": \"PENDING\",\n  \"amount\": 1999.98,\n  \"createdAt\": \"2024-03-30T12:30:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Payments",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments"
+              ]
+            },
+            "description": "Get all payments for the tenant."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/payments",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "payments"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"orderId\": 1,\n    \"paymentGateway\": \"stripe\",\n    \"paymentId\": \"pay_abc123\",\n    \"status\": \"PENDING\",\n    \"amount\": 1999.98,\n    \"createdAt\": \"2024-03-30T12:30:00\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Payment by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments/{{payment_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "{{payment_id}}"
+              ]
+            },
+            "description": "Get a specific payment by ID."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/payments/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "payments",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"orderId\": 1,\n  \"paymentGateway\": \"stripe\",\n  \"paymentId\": \"pay_abc123\",\n  \"status\": \"COMPLETED\",\n  \"amount\": 1999.98,\n  \"createdAt\": \"2024-03-30T12:30:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Payments by Order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments/order/{{order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "order",
+                "{{order_id}}"
+              ]
+            },
+            "description": "Get all payments for a specific order."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/payments/order/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "payments",
+                    "order",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"orderId\": 1,\n    \"paymentGateway\": \"stripe\",\n    \"paymentId\": \"pay_abc123\",\n    \"status\": \"COMPLETED\",\n    \"amount\": 1999.98,\n    \"createdAt\": \"2024-03-30T12:30:00\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Update Payment Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Tenant-ID",
+                "value": "{{tenant_id}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"COMPLETED\",\n  \"paymentId\": \"pay_abc123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/payments/{{payment_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "{{payment_id}}"
+              ]
+            },
+            "description": "Update payment status (PENDING, COMPLETED, FAILED, REFUNDED)."
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": ""
+                },
+                "url": {
+                  "raw": "{{base_url}}/payments/1",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "payments",
+                    "1"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"orderId\": 1,\n  \"paymentGateway\": \"stripe\",\n  \"paymentId\": \"pay_abc123\",\n  \"status\": \"COMPLETED\",\n  \"amount\": 1999.98,\n  \"createdAt\": \"2024-03-30T12:30:00\"\n}"
+            }
+          ]
+        }
+      ]
     }
   ],
   "variable": [
@@ -2713,6 +3456,16 @@
     },
     {
       "key": "order_item_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "cart_id",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "payment_id",
       "value": "1",
       "type": "string"
     },

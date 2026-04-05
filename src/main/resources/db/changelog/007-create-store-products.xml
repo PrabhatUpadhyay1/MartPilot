@@ -4,7 +4,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="007" author="prabhat">
+    <changeSet id="007-create-store-products" author="prabhat">
         <createTable tableName="store_products">
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true"/>
@@ -13,8 +13,15 @@
             <column name="store_id" type="BIGINT"/>
             <column name="product_id" type="BIGINT"/>
             <column name="price" type="DECIMAL(10,2)"/>
-            <column name="stock" type="INT"/>
+            <column name="stock_quantity" type="INT"/>
+            <column name="discount_price" type="DECIMAL(10,2)"/>
+            <column name="description" type="TEXT"/>
             <column name="is_available" type="BOOLEAN" defaultValueBoolean="true"/>
+            <column name="deleted_at" type="TIMESTAMP" />
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" />
         </createTable>
 
         <addUniqueConstraint tableName="store_products"

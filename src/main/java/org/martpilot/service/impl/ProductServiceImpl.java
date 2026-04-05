@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.martpilot.dto.ProductDTO;
 import org.martpilot.entity.Category;
 import org.martpilot.entity.Product;
+import org.martpilot.entity.Store;
 import org.martpilot.entity.Tenant;
 import org.martpilot.exception.ResourceNotFoundException;
 import org.martpilot.exception.TenantAccessDeniedException;
 import org.martpilot.repository.CategoryRepository;
 import org.martpilot.repository.ProductRepository;
+import org.martpilot.repository.StoreRepository;
 import org.martpilot.repository.TenantRepository;
 import org.martpilot.service.ProductService;
 import org.springframework.stereotype.Service;
@@ -25,18 +27,19 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final TenantRepository tenantRepository;
     private final CategoryRepository categoryRepository;
+    private final StoreRepository storeRepository;
 
     @Override
-    public ProductDTO create(Long tenantId, ProductDTO productDTO) {
-        Tenant tenant = tenantRepository.findById(tenantId)
-                .orElseThrow(() -> new ResourceNotFoundException("Tenant", "id", tenantId));
+    public ProductDTO create(Long categoryId, ProductDTO productDTO) {
+        Tenant tenant = tenantRepository.findById(productDTO.getTenantId())
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant", "id", productDTO.getTenantId()));
         
         Category category = null;
         if (productDTO.getCategoryId() != null) {
-            category = categoryRepository.findByIdAndTenantId(productDTO.getCategoryId(), tenantId)
+            category = categoryRepository.findByIdAndTenantId(categoryId, productDTO.getTenantId())
                     .orElseThrow(() -> new ResourceNotFoundException("Category", "id", productDTO.getCategoryId()));
         }
-        
+
         Product product = Product.builder()
                 .tenant(tenant)
                 .name(productDTO.getName())
@@ -62,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProductDTO> getByTenantId(Long tenantId) {
+    public List<ProductDTO> getByTenantId(Long tenantId, Long storeId) {
         return productRepository.findByTenantId(tenantId)
                 .stream()
                 .map(this::mapToDTO)

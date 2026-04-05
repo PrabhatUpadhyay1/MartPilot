@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface StoreService {
 
-    StoreDTO create(Long tenantId, StoreDTO storeDTO);
+    StoreDTO create(StoreDTO storeDTO);
 
     StoreDTO getById(Long tenantId, Long storeId);
 

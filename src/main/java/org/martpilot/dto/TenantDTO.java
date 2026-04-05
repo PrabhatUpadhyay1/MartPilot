@@ -35,7 +35,7 @@ public class TenantDTO {
     private String subscriptionPlan;
 
     @JsonProperty("is_active")
-    private Boolean isActive;
+    private String isActive;
 
     @JsonProperty("created_at")
     private LocalDateTime createdAt;

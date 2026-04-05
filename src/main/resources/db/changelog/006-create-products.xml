@@ -4,17 +4,26 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <changeSet id="006" author="prabhat">
+    <changeSet id="006-create-products" author="prabhat">
         <createTable tableName="products">
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true"/>
             </column>
             <column name="tenant_id" type="BIGINT"/>
             <column name="name" type="VARCHAR(150)"/>
-            <column name="description" type="TEXT"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="store_id" type="BIGINT"/>
             <column name="category_id" type="BIGINT"/>
-            <column name="image_url" type="TEXT"/>
+            <column name="tags" type="VARCHAR(255)"/>
+            <column name="sku" type="VARCHAR(100)"/>
+            <column name="status" type="VARCHAR(20)" defaultValue="ACTIVE" />
+            <column name="image_url" type="VARCHAR(255)"/>
             <column name="brand" type="VARCHAR(100)"/>
+            <column name="deleted_at" type="TIMESTAMP" />
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP" />
         </createTable>
     </changeSet>
 

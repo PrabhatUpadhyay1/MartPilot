@@ -1,9 +1,11 @@
 package org.martpilot.service;
 
 import org.martpilot.dto.OrderItemDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface OrderItemService {
 
     OrderItemDTO create(OrderItemDTO orderItemDTO);

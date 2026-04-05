@@ -10,12 +10,8 @@ import java.util.Optional;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-    List<Category> findByTenantId(Long tenantId);
+    List<Category> findByTenantIdAndStoreId(Long tenantId,  Long storeId);
 
     Optional<Category> findByIdAndTenantId(Long id, Long tenantId);
-
-    List<Category> findByTenantIdAndParentCategoryIsNull(Long tenantId);
-
-    List<Category> findByParentCategoryId(Long parentId);
 }
 
